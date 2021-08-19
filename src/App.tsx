@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button } from 'antd';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         >
           { s }
         </a>
+        <Button type="primary">Button</Button>
       </header>
     </div>
   );
