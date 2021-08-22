@@ -2,8 +2,11 @@ import { IApiStore, RequestParams, ApiResponse } from "./types";
 
 export default class ApiStore implements IApiStore {
   //url GitHub API
-  readonly baseUrl: string =
-    "https://docs.github.com/en/rest/overview/endpoints-available-for-github-apps";
+  readonly baseUrl: string;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
   // Метод, с помощью которого делается запрос.
   async request<SuccessT, ErrorT = any, ReqT = {}>(
