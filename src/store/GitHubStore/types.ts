@@ -15,32 +15,22 @@ export type GetOrganizationReposListParams = {
   direction?: string;
 };
 
-export type RepoItem = [
-  {
-    org: string;
-    type: string;
-    sort: string;
-    direction: string;
-  }
-];
+export type RepoItem = [];
 
 export type ApiResp<RepoItem> =
-  //   | {
-  //       success: true;
-  //       data: RepoItem;
-  //       status: string;
-  //     }
-  //   | {
-  //       success: false;
-  //       data: RepoItem;
-  //       status: string;
-  //     };
-  {
-    data: RepoItem[];
-  };
+  | {
+      success: true;
+      data: RepoItem;
+      status: string;
+    }
+  | {
+      success: false;
+      data: RepoItem;
+      status: string;
+    };
 
 export interface IGitHubStore {
   getOrganizationReposList(
     params: GetOrganizationReposListParams
-  ): Promise<any>;
+  ): Promise<ApiResp<RepoItem[]>>;
 }

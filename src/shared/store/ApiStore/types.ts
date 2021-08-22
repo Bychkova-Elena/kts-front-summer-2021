@@ -1,12 +1,12 @@
 // Перечисление методов HTTP-запроса
-enum HTTPMethod {
+export enum HTTPMethod {
   GET = "GET",
   POST = "POST"
 }
 
 // Параметры запроса
 export type RequestParams<ReqT> = {
-  method: "GET"; // Метод запроса, GET или POST
+  method: "GET" | "POST"; // Метод запроса, GET или POST
   endpoint: string; // API-endpoint, на который делается запрос
   headers: Record<string, string>; // Объект с передаваемыми HTTP-заголовками
 
