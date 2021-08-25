@@ -152,5 +152,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.7"
   }
 }

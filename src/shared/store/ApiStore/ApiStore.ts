@@ -1,4 +1,5 @@
-import { IApiStore, RequestParams, ApiResponse } from "./types";
+import { IApiStore, RequestParams, ApiResponse, HTTPMethod } from "./types";
+import qs from "qs";
 
 export default class ApiStore implements IApiStore {
   //url GitHub API
@@ -8,26 +9,52 @@ export default class ApiStore implements IApiStore {
     this.baseUrl = baseUrl;
   }
 
+  private getRequestData<ReqT>(
+    params: RequestParams<ReqT>
+  ): [string, RequestInit] {
+    let url: string = `${this.baseUrl}${params.endpoint}`;
+
+    const req: RequestInit = {
+      method: params.method,
+      headers: { ...params.headers }
+    };
+
+    if (params.method === HTTPMethod.GET) {
+      url = `${url}?${qs.stringify(params.data)}`;
+    } else if (params.method === HTTPMethod.POST) {
+      req.body = JSON.stringify(params.data);
+      req.headers = {
+        ...req.headers,
+        "Content-Type": "application/json;charset=UTF-8"
+      };
+    }
+    return [url, req];
+  }
+
   // Метод, с помощью которого делается запрос.
   async request<SuccessT, ErrorT = any, ReqT = {}>(
     params: RequestParams<ReqT>
   ): Promise<ApiResponse<SuccessT, ErrorT>> {
-    const url: string = `${this.baseUrl}/${params.endpoint}`;
     try {
-      const response = await fetch(url, params);
+      const response = await fetch(...this.getRequestData(params));
 
-      const data = await response.json();
-
-      return {
-        success: true,
-        data,
-        status: response.status
-      };
+      if (response.ok) {
+        return {
+          success: true,
+          data: await response.json(),
+          status: response.status
+        };
+      } else {
+        return {
+          success: false,
+          data: await response.json(),
+          status: response.status
+        };
+      }
     } catch (error) {
       return {
         success: false,
-        data: error,
-        status: error.status
+        data: error
       };
     }
   }

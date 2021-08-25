@@ -6,31 +6,31 @@
  * Выберите любой запрос из публичного API GitHub.
  */
 
+import { ApiResponse } from "src/shared/store/ApiStore/types";
+
 // Параметры запроса
 export type GetOrganizationReposListParams = {
   organizationName: string;
-  org?: string;
-  type?: string;
-  sort?: string;
-  direction?: string;
 };
 
-export type RepoItem = [];
+export type GitHubRepoOwner = {
+  id: number;
+  login: string;
+  avatar_url: string;
+  url: string;
+};
 
-export type ApiResp<RepoItem> =
-  | {
-      success: true;
-      data: RepoItem;
-      status: string;
-    }
-  | {
-      success: false;
-      data: RepoItem;
-      status: string;
-    };
+export type RepoItem = {
+  id: string;
+  name: string;
+  url: string;
+  private: boolean;
+  stargazers_count: number;
+  owner: GitHubRepoOwner;
+};
 
 export interface IGitHubStore {
   getOrganizationReposList(
     params: GetOrganizationReposListParams
-  ): Promise<ApiResp<RepoItem[]>>;
+  ): Promise<ApiResponse<RepoItem[], any>>;
 }

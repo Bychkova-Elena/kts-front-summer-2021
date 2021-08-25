@@ -6,7 +6,7 @@ export enum HTTPMethod {
 
 // Параметры запроса
 export type RequestParams<ReqT> = {
-  method: "GET" | "POST"; // Метод запроса, GET или POST
+  method: HTTPMethod; // Метод запроса, GET или POST
   endpoint: string; // API-endpoint, на который делается запрос
   headers: Record<string, string>; // Объект с передаваемыми HTTP-заголовками
 
@@ -15,11 +15,11 @@ export type RequestParams<ReqT> = {
    * - Для GET-запроса данные превращаются в query-строку и добавляются в endpoint
    * - Для POST-запроса данные преобразуются к формату JSON и добавляются в тело запроса (необязательное требование)
    */
-  data?: ReqT;
+  data: ReqT;
 };
 
 // Перечисление статусов ответа
-enum StatusHTTP {
+export enum StatusHTTP {
   /**
    * The server has received the request headers and the client should proceed to send the request body
    * (in the case of a request for which a body needs to be sent; for example, a POST request).
@@ -404,7 +404,7 @@ export type ApiResponse<SuccessT, ErrorT> =
   | {
       success: false;
       data: ErrorT;
-      status: StatusHTTP;
+      status?: StatusHTTP;
     };
 
 // Интерфейс для класса, с помощью которого можно делать запросы к API
