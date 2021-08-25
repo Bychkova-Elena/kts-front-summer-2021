@@ -111,13 +111,14 @@ body{
   text-decoration: none;
 }
 
-.git-repo-tile__repo-name b {
-  width: 500px;
+/* Обрезка текста*/
+/* .git-repo-tile__repo-name b {
   display: block;
+  max-width: 400px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-}
+} */
 
 .git-repo-tile__org-link a:hover{
   color: var(--link-hover-color);
