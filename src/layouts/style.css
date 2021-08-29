@@ -32,7 +32,6 @@ body{
 /* Поиск*/
 
 .search-input{
-  grid-row: 1/2;
   background: var(--background-color);
   border: 1px solid var(--border-color);
   color: var(--hint-color);
@@ -54,7 +53,6 @@ body{
 }
 
 .search-button{
-  grid-row: 1/2;
   background: var(--accent-color);
   border:0;
   border-radius: 6px;
@@ -112,13 +110,13 @@ body{
 }
 
 /* Обрезка текста*/
-/* .git-repo-tile__repo-name b {
+.git-repo-tile__repo-name b {
   display: block;
-  max-width: 400px;
+  width: 70vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-} */
+}
 
 .git-repo-tile__org-link a:hover{
   color: var(--link-hover-color);

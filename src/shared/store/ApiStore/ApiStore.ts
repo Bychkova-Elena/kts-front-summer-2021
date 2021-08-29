@@ -21,7 +21,7 @@ export default class ApiStore implements IApiStore {
 
     if (params.method === HTTPMethod.GET) {
       url = `${url}?${qs.stringify(params.data)}`;
-    } else if (params.method === HTTPMethod.POST) {
+    } else {
       req.body = JSON.stringify(params.data);
       req.headers = {
         ...req.headers,
