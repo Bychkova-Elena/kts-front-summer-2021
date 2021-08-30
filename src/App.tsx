@@ -1,28 +1,10 @@
+import ReposSearchPage from "@pages/ReposSearchPage";
 import "./App.css";
-import { Button } from "antd";
-
-import logo from "./logo.svg";
 
 function App() {
-  const s: string = "Hi";
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {s}
-        </a>
-        <Button type="primary">Button</Button>
-      </header>
+      <ReposSearchPage />
     </div>
   );
 }
