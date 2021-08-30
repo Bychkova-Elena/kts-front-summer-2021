@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import { Button } from 'antd';
+import "./App.css";
+import { Button } from "antd";
+
+import logo from "./logo.svg";
 
 function App() {
-
   const s: string = "Hi";
 
   return (
@@ -19,7 +19,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          { s }
+          {s}
         </a>
         <Button type="primary">Button</Button>
       </header>

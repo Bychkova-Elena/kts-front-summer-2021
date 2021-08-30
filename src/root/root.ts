@@ -6,8 +6,10 @@ const EXAMPLE_ORGANIZATION = "ktsstudio";
 
 gitHubStore
   .getOrganizationReposList({
-    organizationName: EXAMPLE_ORGANIZATION
+    organizationName: EXAMPLE_ORGANIZATION,
   })
-  .then(result => {
+  .then((result) => {
+    /* eslint-disable no-console */
     console.log(result);
+    /* eslint-disable no-console */
   });

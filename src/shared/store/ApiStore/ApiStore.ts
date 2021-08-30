@@ -1,5 +1,6 @@
-import { IApiStore, RequestParams, ApiResponse, HTTPMethod } from "./types";
 import qs from "qs";
+
+import { IApiStore, RequestParams, ApiResponse, HTTPMethod } from "./types";
 
 export default class ApiStore implements IApiStore {
   //url GitHub API
@@ -16,7 +17,7 @@ export default class ApiStore implements IApiStore {
 
     const req: RequestInit = {
       method: params.method,
-      headers: { ...params.headers }
+      headers: { ...params.headers },
     };
 
     if (params.method === HTTPMethod.GET) {
@@ -25,7 +26,7 @@ export default class ApiStore implements IApiStore {
       req.body = JSON.stringify(params.data);
       req.headers = {
         ...req.headers,
-        "Content-Type": "application/json;charset=UTF-8"
+        "Content-Type": "application/json;charset=UTF-8",
       };
     }
     return [url, req];
@@ -42,19 +43,19 @@ export default class ApiStore implements IApiStore {
         return {
           success: true,
           data: await response.json(),
-          status: response.status
+          status: response.status,
         };
       } else {
         return {
           success: false,
           data: await response.json(),
-          status: response.status
+          status: response.status,
         };
       }
     } catch (error) {
       return {
         success: false,
-        data: error
+        data: error,
       };
     }
   }

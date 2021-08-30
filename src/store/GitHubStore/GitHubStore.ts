@@ -1,9 +1,9 @@
-import { ApiResponse, HTTPMethod } from "src/shared/store/ApiStore/types";
 import ApiStore from "../../shared/store/ApiStore";
+import { ApiResponse, HTTPMethod } from "../../shared/store/ApiStore/types";
 import {
   IGitHubStore,
   GetOrganizationReposListParams,
-  RepoItem
+  RepoItem,
 } from "./types";
 
 const BASE_URL: string = "https://api.github.com";
@@ -18,7 +18,7 @@ export default class GitHubStore implements IGitHubStore {
       method: HTTPMethod.GET,
       endpoint: `/orgs/${params.organizationName}/repos`,
       headers: {},
-      data: {}
+      data: {},
     });
   }
 }
