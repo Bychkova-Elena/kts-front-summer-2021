@@ -1,9 +1,12 @@
+import "./StarIcon.css";
+
 export type StartIconProps = {
   currentColor?: string;
 };
 
 const StartIcon: React.FC<StartIconProps> = ({ currentColor = "#FF9432" }) => (
   <svg
+    className="starIcon"
     xmlns="http://www.w3.org/2000/svg"
     width="14"
     height="13"

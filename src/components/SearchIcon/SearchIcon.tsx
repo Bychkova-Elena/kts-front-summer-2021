@@ -1,9 +1,12 @@
-export type SearchIcon = {
-  currentColor: string;
+import "./SearchIcon.css";
+
+export type SearchIconProps = {
+  currentColor?: string;
 };
 
-const SearchIcon: React.FC<SearchIcon> = ({ currentColor = "#fff" }) => (
+const SearchIcon: React.FC<SearchIconProps> = ({ currentColor = "#fff" }) => (
   <svg
+    className="searchIcon"
     xmlns="http://www.w3.org/2000/svg"
     width="18"
     height="18"

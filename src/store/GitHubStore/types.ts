@@ -27,6 +27,7 @@ export type RepoItem = {
   private: boolean;
   stargazers_count: number;
   owner: GitHubRepoOwner;
+  updated_at: Date;
 };
 
 export interface IGitHubStore {
