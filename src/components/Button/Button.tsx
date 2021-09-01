@@ -6,8 +6,12 @@ export type ButtonProps = PropsWithChildren<{
   disabled?: boolean;
 }>;
 
-const Button: React.FC<ButtonProps> = ({ onClick, children, disabled }) => (
-  <button onClick={onClick} {...disabled}>
+const Button: React.FC<ButtonProps> = ({
+  onClick,
+  children,
+  disabled = false,
+}) => (
+  <button onClick={onClick} disabled={disabled}>
     {children}
   </button>
 );

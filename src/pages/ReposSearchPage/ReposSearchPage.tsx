@@ -11,6 +11,7 @@ import GitHubStore from "@store/GitHubStore/GitHubStore";
 
 function ReposSearchPage() {
   const [repoList, setRepoList] = useState([]);
+  const [value, setValue] = useState("");
 
   const getRepos = async () => {
     const EXAMPLE_ORGANIZATION = "ktsstudio";
@@ -26,13 +27,25 @@ function ReposSearchPage() {
     getRepos();
   }, []);
 
+  if (repoList === undefined || !repoList.length) {
+    return <p>Loading repoList...</p>;
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
   return (
     <div className="repositories-page">
-      <Input placeholder="Введите название организации" />
+      <Input
+        placeholder="Введите название репозитория"
+        onChange={handleChange}
+        value={value}
+      />
       <Button>
         <SearchIcon />
       </Button>
-      {repoList &&
+      {repoList.length &&
         repoList.map((repo, i) => (
           <React.Fragment key={i}>
             <RepoTile repo={repo} />
