@@ -13,6 +13,12 @@ export type GetOrganizationReposListParams = {
   organizationName: string;
 };
 
+// Параметры запроса
+export type GetRepoBranchesLisParams = {
+  ownerName: string;
+  repoName: string;
+};
+
 export type GitHubRepoOwner = {
   id: number;
   login: string;
@@ -30,8 +36,18 @@ export type RepoItem = {
   updated_at: Date;
 };
 
+export type BranchItem = {
+  name: string;
+  protected: boolean;
+  protection_url: string;
+};
+
 export interface IGitHubStore {
   getOrganizationReposList(
     params: GetOrganizationReposListParams
   ): Promise<ApiResponse<RepoItem[], any>>;
+
+  getRepoBranchesList(
+    params: GetRepoBranchesLisParams
+  ): Promise<ApiResponse<BranchItem[], any>>;
 }

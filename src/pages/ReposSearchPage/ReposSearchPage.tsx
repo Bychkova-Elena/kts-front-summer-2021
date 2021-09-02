@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import Button from "@components/Button";
 import Input from "@components/Input";
+import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
@@ -15,10 +16,11 @@ function ReposSearchPage() {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const getRepos = async () => {
-      const EXAMPLE_ORGANIZATION = "ktsstudio";
+      const EXAMPLE_ORGANIZATION = "kubernetes";
       try {
         await new GitHubStore()
           .getOrganizationReposList({
@@ -50,6 +52,14 @@ function ReposSearchPage() {
     setDisabled(true);
   };
 
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
   return (
     <div className="repositories-page">
       <Input
@@ -63,7 +73,12 @@ function ReposSearchPage() {
       {repoList.length &&
         repoList.map((repo) => (
           <React.Fragment key={repo.id}>
-            <RepoTile repo={repo} />
+            <RepoTile repo={repo} onClick={showDrawer} />
+            <RepoBranchesDrawer
+              selectedRepo={repo}
+              visible={visible}
+              onClose={onClose}
+            />
           </React.Fragment>
         ))}
     </div>
