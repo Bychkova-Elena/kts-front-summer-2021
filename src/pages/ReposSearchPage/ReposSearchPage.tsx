@@ -61,7 +61,7 @@ function ReposSearchPage() {
         <SearchIcon />
       </Button>
       {repoList.length &&
-        repoList.map((repo, i) => (
+        repoList.map((repo) => (
           <React.Fragment key={repo.id}>
             <RepoTile repo={repo} />
           </React.Fragment>

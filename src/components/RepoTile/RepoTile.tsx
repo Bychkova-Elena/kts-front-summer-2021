@@ -1,3 +1,5 @@
+import React from "react";
+
 import Avatar from "@components/Avatar";
 import StartIcon from "@components/StarIcon";
 import { RepoItem } from "@store/GitHubStore/types";
@@ -32,4 +34,4 @@ const RepoTile: React.FC<RepoTileProps> = ({ onClick, repo }) => (
   </div>
 );
 
-export default RepoTile;
+export default React.memo(RepoTile);
