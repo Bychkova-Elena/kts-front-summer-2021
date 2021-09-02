@@ -8,31 +8,46 @@ import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
 import GitHubStore from "@store/GitHubStore/GitHubStore";
+import { RepoItem } from "@store/GitHubStore/types";
 
 function ReposSearchPage() {
-  const [repoList, setRepoList] = useState([]);
+  const [repoList, setRepoList] = useState<RepoItem[]>([]);
   const [value, setValue] = useState("");
-
-  const getRepos = async () => {
-    const EXAMPLE_ORGANIZATION = "ktsstudio";
-    try {
-      const repositories = await new GitHubStore().getOrganizationReposList({
-        organizationName: EXAMPLE_ORGANIZATION,
-      });
-      setRepoList(repositories.data);
-    } catch (err) {}
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
+    const getRepos = async () => {
+      const EXAMPLE_ORGANIZATION = "ktsstudio";
+      try {
+        await new GitHubStore()
+          .getOrganizationReposList({
+            organizationName: EXAMPLE_ORGANIZATION,
+          })
+          .then((repo) => setRepoList(repo.data))
+          .finally(() => {
+            setIsLoading(false);
+            setDisabled(false);
+          });
+      } catch (err) {}
+    };
     getRepos();
-  }, []);
+  }, [value]);
 
-  if (repoList === undefined || !repoList.length) {
+  if (isLoading) {
     return <p>Loading repoList...</p>;
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
+  };
+
+  const handleSearch = () => {
+    const filteredData = repoList.filter((repo) => {
+      return repo.name.toLowerCase().includes(value.toLowerCase());
+    });
+    setRepoList(filteredData);
+    setDisabled(true);
   };
 
   return (
@@ -42,12 +57,12 @@ function ReposSearchPage() {
         onChange={handleChange}
         value={value}
       />
-      <Button>
+      <Button onClick={handleSearch} disabled={disabled}>
         <SearchIcon />
       </Button>
       {repoList.length &&
         repoList.map((repo, i) => (
-          <React.Fragment key={i}>
+          <React.Fragment key={repo.id}>
             <RepoTile repo={repo} />
           </React.Fragment>
         ))}
