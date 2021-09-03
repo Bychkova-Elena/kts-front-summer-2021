@@ -10,6 +10,7 @@ import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
 import GitHubStore from "@store/GitHubStore/GitHubStore";
 import { RepoItem } from "@store/GitHubStore/types";
+import { Spin, BackTop } from "antd";
 
 function ReposSearchPage() {
   const [repoList, setRepoList] = useState<RepoItem[]>([]);
@@ -36,10 +37,6 @@ function ReposSearchPage() {
     getRepos();
   }, [value]);
 
-  if (isLoading) {
-    return <p>Loading repoList...</p>;
-  }
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -61,17 +58,22 @@ function ReposSearchPage() {
   };
 
   return (
-    <div className="repositories-page">
-      <Input
-        placeholder="Введите название репозитория"
-        onChange={handleChange}
-        value={value}
-      />
-      <Button onClick={handleSearch} disabled={disabled}>
-        <SearchIcon />
-      </Button>
-      {repoList.length &&
-        repoList.map((repo) => (
+    <Spin spinning={isLoading} tip="Loading...">
+      <div className="repositories-page">
+        <BackTop>
+          <Button className="backTop">
+            <b>&#8593;</b>
+          </Button>
+        </BackTop>
+        <Input
+          placeholder="Введите название репозитория"
+          onChange={handleChange}
+          value={value}
+        />
+        <Button onClick={handleSearch} disabled={disabled}>
+          <SearchIcon />
+        </Button>
+        {repoList.map((repo) => (
           <React.Fragment key={repo.id}>
             <RepoTile repo={repo} onClick={showDrawer} />
             <RepoBranchesDrawer
@@ -81,7 +83,9 @@ function ReposSearchPage() {
             />
           </React.Fragment>
         ))}
-    </div>
+        {!repoList.length && <span>Репозиториев не найдено</span>}
+      </div>
+    </Spin>
   );
 }
 

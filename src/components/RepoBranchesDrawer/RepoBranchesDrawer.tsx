@@ -38,7 +38,7 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
 
   return (
     <Drawer
-      title="Branches"
+      title="Список веток"
       placement="right"
       onClose={onClose}
       visible={visible}
@@ -47,7 +47,7 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
         branchesList.map((branch, i) => (
           <React.Fragment key={i}>
             <p>
-              {i + 1}. Name: {branch.name}
+              {i + 1}. {branch.name}
             </p>
           </React.Fragment>
         ))}
