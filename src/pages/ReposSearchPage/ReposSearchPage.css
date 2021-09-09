@@ -6,6 +6,9 @@
   row-gap: 20px;
   column-gap:12px;
 }
+.repositories-page__repoItem{
+  grid-column: 1/3;
+}
 .backTop {
   width:45px;
   color: var(--background-color);

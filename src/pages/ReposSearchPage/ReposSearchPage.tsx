@@ -4,20 +4,20 @@ import { useEffect } from "react";
 
 import Button from "@components/Button";
 import Input from "@components/Input";
-import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
 import GitHubStore from "@store/GitHubStore/GitHubStore";
 import { RepoItem } from "@store/GitHubStore/types";
 import { Spin, BackTop } from "antd";
+import { useHistory } from "react-router-dom";
 
 function ReposSearchPage() {
+  let history = useHistory();
   const [repoList, setRepoList] = useState<RepoItem[]>([]);
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const getRepos = async () => {
@@ -49,14 +49,6 @@ function ReposSearchPage() {
     setDisabled(true);
   };
 
-  const showDrawer = () => {
-    setVisible(true);
-  };
-
-  const onClose = () => {
-    setVisible(false);
-  };
-
   return (
     <Spin spinning={isLoading} tip="Loading...">
       <div className="repositories-page">
@@ -73,16 +65,18 @@ function ReposSearchPage() {
         <Button onClick={handleSearch} disabled={disabled}>
           <SearchIcon />
         </Button>
-        {repoList.map((repo) => (
-          <React.Fragment key={repo.id}>
-            <RepoTile repo={repo} onClick={showDrawer} />
-            <RepoBranchesDrawer
-              selectedRepo={repo}
-              visible={visible}
-              onClose={onClose}
-            />
-          </React.Fragment>
-        ))}
+        <div className="repositories-page__repoItem">
+          {repoList.map((repo) => (
+            <React.Fragment key={repo.id}>
+              <RepoTile
+                repo={repo}
+                onClick={() => {
+                  history.push(`/repos/${repo.id}`);
+                }}
+              />
+            </React.Fragment>
+          ))}
+        </div>
         {!repoList.length && <span>Репозиториев не найдено</span>}
       </div>
     </Spin>

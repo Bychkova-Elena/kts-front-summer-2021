@@ -20,7 +20,7 @@ export type GetRepoBranchesLisParams = {
 };
 
 export type GitHubRepoOwner = {
-  id: number;
+  id: string;
   login: string;
   avatar_url: string;
   url: string;
@@ -42,6 +42,11 @@ export type BranchItem = {
   protection_url: string;
 };
 
+export type GetOrganizationRepoByIdParams = {
+  id: string;
+  organizationName: string;
+};
+
 export interface IGitHubStore {
   getOrganizationReposList(
     params: GetOrganizationReposListParams
@@ -50,4 +55,8 @@ export interface IGitHubStore {
   getRepoBranchesList(
     params: GetRepoBranchesLisParams
   ): Promise<ApiResponse<BranchItem[], any>>;
+
+  getOrganizationRepoById(
+    params: GetOrganizationRepoByIdParams
+  ): Promise<RepoItem[]>;
 }

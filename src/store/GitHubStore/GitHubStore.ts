@@ -6,6 +6,7 @@ import {
   RepoItem,
   GetRepoBranchesLisParams,
   BranchItem,
+  GetOrganizationRepoByIdParams,
 } from "./types";
 
 const BASE_URL: string = "https://api.github.com";
@@ -22,6 +23,18 @@ export default class GitHubStore implements IGitHubStore {
       headers: {},
       data: {},
     });
+  }
+
+  async getOrganizationRepoById(
+    params: GetOrganizationRepoByIdParams
+  ): Promise<RepoItem[]> {
+    let result = await this.apiStore.request({
+      method: HTTPMethod.GET,
+      endpoint: `/orgs/${params.organizationName}/repos`,
+      headers: {},
+      data: {},
+    });
+    return result.data.filter((repo: RepoItem) => repo.id == params.id);
   }
 
   async getRepoBranchesList(
