@@ -8,6 +8,7 @@ import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import { Spin, BackTop } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useHistory } from "react-router-dom";
 
 import styles from "./ReposSearchPage.module.scss";
@@ -52,18 +53,27 @@ function ReposSearchPage() {
           <SearchIcon />
         </Button>
         <div className={styles.repositoriesPage__repoItem}>
-          {reposContext.repoList.map((repo) => (
-            <React.Fragment key={repo.id}>
-              <RepoTile
-                repo={repo}
-                onClick={() => {
-                  history.push(`/repos/${repo.id}`);
-                }}
-              />
-            </React.Fragment>
-          ))}
+          <InfiniteScroll
+            next={reposContext.fetchData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            dataLength={reposContext.repoList.length}
+          >
+            {reposContext.repoList.map((repo) => (
+              <React.Fragment key={repo.id}>
+                <RepoTile
+                  repo={repo}
+                  onClick={() => {
+                    history.push(`/repos/${repo.id}`);
+                  }}
+                />
+              </React.Fragment>
+            ))}
+            {!reposContext.repoList.length && (
+              <span>Репозиториев не найдено</span>
+            )}
+          </InfiniteScroll>
         </div>
-        {!reposContext.repoList.length && <span>Репозиториев не найдено</span>}
       </div>
     </Spin>
   );

@@ -19,7 +19,7 @@ export default class GitHubStore implements IGitHubStore {
   ): Promise<ApiResponse<RepoItem[], any>> {
     return await this.apiStore.request({
       method: HTTPMethod.GET,
-      endpoint: `/orgs/${params.organizationName}/repos`,
+      endpoint: `/orgs/${params.organizationName}/repos?per_page=${params.per_page}&page=${params.page}`,
       headers: {},
       data: {},
     });

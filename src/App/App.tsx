@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import RepoItemBranches from "@pages/RepoItemBranches";
 import ReposSearchPage from "@pages/ReposSearchPage";
@@ -17,6 +17,7 @@ type ReposContextType = {
   setRepoList: (repoList: RepoItem[]) => void;
   isLoading: boolean;
   load: () => void;
+  fetchData: () => void;
 };
 
 const ReposContext = createContext<ReposContextType>({
@@ -24,6 +25,7 @@ const ReposContext = createContext<ReposContextType>({
   isLoading: true,
   setRepoList: () => {},
   load: () => {},
+  fetchData: () => {},
 });
 
 const Provider = ReposContext.Provider;
@@ -37,10 +39,14 @@ function App() {
   const load = () => {
     const getRepos = async () => {
       const EXAMPLE_ORGANIZATION = "kubernetes";
+      const PER_PAGE = 10;
+      const PAGE = 1;
       try {
         await new GitHubStore()
           .getOrganizationReposList({
             organizationName: EXAMPLE_ORGANIZATION,
+            per_page: PER_PAGE,
+            page: PAGE,
           })
           .then((repo) => setRepoList(repo.data))
           .finally(() => {
@@ -51,8 +57,14 @@ function App() {
     getRepos();
   };
 
+  const fetchData = useCallback(() => {
+    setTimeout(() => {
+      setRepoList((prev) => [...prev, ...prev]);
+    }, 2000);
+  }, []);
+
   return (
-    <Provider value={{ repoList, isLoading, load, setRepoList }}>
+    <Provider value={{ repoList, isLoading, load, setRepoList, fetchData }}>
       <div className="App">
         <Router>
           <Switch>

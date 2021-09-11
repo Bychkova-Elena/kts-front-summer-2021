@@ -11,6 +11,8 @@ import { ApiResponse } from "src/shared/store/ApiStore/types";
 // Параметры запроса
 export type GetOrganizationReposListParams = {
   organizationName: string;
+  per_page?: number;
+  page?: number;
 };
 
 // Параметры запроса
