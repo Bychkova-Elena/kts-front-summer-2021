@@ -7,9 +7,10 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
-import "./ReposSearchPage.scss";
 import { Spin, BackTop } from "antd";
 import { useHistory } from "react-router-dom";
+
+import styles from "./ReposSearchPage.module.scss";
 
 function ReposSearchPage() {
   let history = useHistory();
@@ -36,9 +37,9 @@ function ReposSearchPage() {
 
   return (
     <Spin spinning={reposContext.isLoading} tip="Loading...">
-      <div className="repositories-page">
+      <div className={styles.repositoriesPage}>
         <BackTop>
-          <Button className="backTop">
+          <Button className={styles.repositoriesPage__backTop}>
             <b>&#8593;</b>
           </Button>
         </BackTop>
@@ -50,7 +51,7 @@ function ReposSearchPage() {
         <Button onClick={handleSearch} disabled={disabled}>
           <SearchIcon />
         </Button>
-        <div className="repositories-page__repoItem">
+        <div className={styles.repositoriesPage__repoItem}>
           {reposContext.repoList.map((repo) => (
             <React.Fragment key={repo.id}>
               <RepoTile

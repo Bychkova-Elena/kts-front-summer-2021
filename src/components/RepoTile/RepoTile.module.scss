@@ -1,6 +1,6 @@
 @import "/src/variables";
 
-.git-repo-tile{
+.gitRepoTile{
   display: flex;
   align-items: center;
   @include color($background-color, $border-color);
@@ -26,7 +26,7 @@
   vertical-align: middle;
 }
 
-  &__repo-name b {
+  &__repoName b {
   display: block;
   width: 70vw;
   white-space: nowrap;
@@ -34,7 +34,7 @@
   text-overflow: ellipsis;
 }
 
-  &__org-link a:hover{
+  &__orgLink a:hover{
   color: $link-hover-color;
 }
 

@@ -5,7 +5,8 @@ import StartIcon from "@components/StarIcon";
 import { RepoItem } from "@store/GitHubStore/types";
 import { Tooltip } from "antd";
 import Moment from "moment";
-import "./RepoTile.scss";
+
+import styles from "./RepoTile.module.scss";
 
 export type RepoTileProps = {
   onClick?: (e: React.MouseEvent) => void;
@@ -14,19 +15,19 @@ export type RepoTileProps = {
 
 const RepoTile: React.FC<RepoTileProps> = ({ onClick, repo }) => (
   <Tooltip title="Посмотреть ветки репозитория" color="#FF5555">
-    <div className="git-repo-tile" onClick={onClick}>
-      <div className="git-repo-tile__avatar">
+    <div className={styles.gitRepoTile} onClick={onClick}>
+      <div className={styles.gitRepoTile__avatar}>
         <Avatar src={repo.owner.avatar_url}></Avatar>
       </div>
-      <div className="git-repo-tile__content">
-        <div className="git-repo-tile__repo-name">
+      <div className={styles.gitRepoTile__content}>
+        <div className={styles.gitRepoTile__repoName}>
           <b> {repo.name} </b>
         </div>
-        <div className="git-repo-tile__org-link">
+        <div className={styles.gitRepoTile__orgLink}>
           <a href={repo.owner.url}> {repo.owner.login}</a>
         </div>
-        <div className="git-repo-tile__info">
-          <div className="git-repo-tile__stars">
+        <div className={styles.gitRepoTile__info}>
+          <div className={styles.gitRepoTile__stars}>
             <StartIcon></StartIcon>
             <small>{repo.stargazers_count}</small>
           </div>
