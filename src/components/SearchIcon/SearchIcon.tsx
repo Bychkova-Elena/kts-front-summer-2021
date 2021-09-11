@@ -1,4 +1,4 @@
-import "./SearchIcon.css";
+import "./SearchIcon.scss";
 
 export type SearchIconProps = {
   currentColor?: string;

@@ -7,7 +7,7 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
-import "./ReposSearchPage.css";
+import "./ReposSearchPage.scss";
 import { Spin, BackTop } from "antd";
 import { useHistory } from "react-router-dom";
 

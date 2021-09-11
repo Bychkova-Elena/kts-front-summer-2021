@@ -1,16 +1,18 @@
+@import "/src/variables";
+
 button{
-  background: var(--accent-color);
+  background: $accent-color;
   border:0;
   border-radius: 6px;
   padding:14px;
   box-sizing: border-box;
-}
 
-button:hover:enabled{
+  &:hover:enabled{
   opacity: 0.7;
   cursor: pointer;
 }
 
-button:disabled{
-  background: var(--border-color);
+  &:disabled{
+  background: $border-color;
+}
 }

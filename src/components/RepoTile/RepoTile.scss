@@ -1,33 +1,32 @@
+@import "/src/variables";
+
 .git-repo-tile{
   display: flex;
   align-items: center;
-  background: var(--background-color);
-  border: 1px solid var(--border-color);
+  @include color($background-color, $border-color);
   box-sizing: border-box;
   border-radius: 6px;
   padding:12px;
   margin-bottom:16px;
-}
 
-.git-repo-tile:hover{
+  &:hover{
   cursor: pointer;
-  box-shadow: 0px 2px 6px var(--shadow-color);
+  box-shadow: 0px 2px 6px $shadow-color;
 }
-
-.git-repo-tile__content > div{
+  
+  &__content > div{
   margin-bottom: 4px;
 }
 
-.git-repo-tile__content a, small{
+  &__content a, small{
   font-size: 14px!important;
   line-height: 16px;
-  color: var(--hint-color);
+  color: $hint-color;
   text-decoration: none;
   vertical-align: middle;
 }
 
-/* Обрезка текста*/
-.git-repo-tile__repo-name b {
+  &__repo-name b {
   display: block;
   width: 70vw;
   white-space: nowrap;
@@ -35,11 +34,12 @@
   text-overflow: ellipsis;
 }
 
-.git-repo-tile__org-link a:hover{
-  color: var(--link-hover-color);
+  &__org-link a:hover{
+  color: $link-hover-color;
 }
 
-.git-repo-tile__stars{
+  &__stars{
   display: inline;
   margin-right: 20px;
+}
 }

@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import "./Input.css";
+import "./Input.scss";
 
 export type InputProps = {
   onChange: ChangeEventHandler<HTMLInputElement>;
