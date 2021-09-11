@@ -19,7 +19,7 @@ function ReposSearchPage() {
 
   useEffect(() => {
     reposContext.load();
-  }, [reposContext]);
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);

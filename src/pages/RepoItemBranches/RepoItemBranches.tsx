@@ -1,35 +1,21 @@
 import { useEffect, useState } from "react";
 import React from "react";
 
+import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
-import GitHubStore from "@store/GitHubStore";
 import { RepoItem } from "@store/GitHubStore/types";
 import { Spin } from "antd";
 import { useParams } from "react-router-dom";
 
 function RepoItemBranches() {
-  const [repo, setRepo] = useState<RepoItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const reposContext = useReposContext();
   const [visible, setVisible] = useState(false);
   const { id } = useParams<{ id: string }>();
+  const repo = reposContext.repoList.filter((repo: RepoItem) => repo.id == id);
 
   useEffect(() => {
-    const getRepo = async () => {
-      const EXAMPLE_ORGANIZATION = "kubernetes";
-      try {
-        await new GitHubStore()
-          .getOrganizationRepoById({
-            id: id,
-            organizationName: EXAMPLE_ORGANIZATION,
-          })
-          .then((repo) => setRepo(repo))
-          .finally(() => {
-            setIsLoading(false);
-          });
-      } catch (err) {}
-    };
-    getRepo();
+    reposContext.load();
   }, [id]);
 
   const showDrawer = () => {
@@ -41,7 +27,7 @@ function RepoItemBranches() {
   };
 
   return (
-    <Spin spinning={isLoading} tip="Loading...">
+    <Spin spinning={reposContext.isLoading} tip="Loading...">
       <div>
         {repo.map((repo) => (
           <React.Fragment key={repo.id}>
