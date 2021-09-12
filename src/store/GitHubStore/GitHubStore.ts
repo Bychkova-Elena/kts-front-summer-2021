@@ -27,14 +27,13 @@ export default class GitHubStore implements IGitHubStore {
 
   async getOrganizationRepoById(
     params: GetOrganizationRepoByIdParams
-  ): Promise<RepoItem[]> {
-    let result = await this.apiStore.request({
+  ): Promise<ApiResponse<RepoItem, any>> {
+    return await this.apiStore.request({
       method: HTTPMethod.GET,
-      endpoint: `/orgs/${params.organizationName}/repos`,
+      endpoint: `/repos/${params.organizationName}/${params.name}`,
       headers: {},
       data: {},
     });
-    return result.data.filter((repo: RepoItem) => repo.id == params.id);
   }
 
   async getRepoBranchesList(

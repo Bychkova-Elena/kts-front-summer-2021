@@ -1,6 +1,4 @@
-import { useState } from "react";
-import React from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useReposContext } from "@App/App";
 import Button from "@components/Button";
@@ -13,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 import styles from "./ReposSearchPage.module.scss";
 
-function ReposSearchPage() {
+const ReposSearchPage: React.FC = () => {
   let history = useHistory();
   const reposContext = useReposContext();
   const [value, setValue] = useState("");
@@ -77,6 +75,6 @@ function ReposSearchPage() {
       </div>
     </Spin>
   );
-}
+};
 
 export default ReposSearchPage;

@@ -10,7 +10,7 @@ import { useParams, Link } from "react-router-dom";
 
 import styles from "./RepoItemBranches.module.scss";
 
-function RepoItemBranches() {
+const RepoItemBranches: React.FC = () => {
   const reposContext = useReposContext();
   const [visible, setVisible] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -67,6 +67,6 @@ function RepoItemBranches() {
       </div>
     </Spin>
   );
-}
+};
 
 export default RepoItemBranches;

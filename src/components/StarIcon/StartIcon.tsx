@@ -1,3 +1,5 @@
+import React from "react";
+
 import styles from "./StarIcon.module.scss";
 
 export type StartIconProps = {
@@ -22,4 +24,4 @@ const StartIcon: React.FC<StartIconProps> = ({ currentColor = "#FF9432" }) => (
   </svg>
 );
 
-export default StartIcon;
+export default React.memo(StartIcon);

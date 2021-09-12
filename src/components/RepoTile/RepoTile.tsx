@@ -31,7 +31,7 @@ const RepoTile: React.FC<RepoTileProps> = ({ onClick, repo }) => (
             <StartIcon></StartIcon>
             <small>{repo.stargazers_count}</small>
           </div>
-          <small> Updated {Moment(repo.updated_at).format("D MMM")}</small>
+          <small>Updated {Moment(repo.updated_at).format("D MMM")}</small>
         </div>
       </div>
     </div>

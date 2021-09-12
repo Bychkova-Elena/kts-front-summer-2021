@@ -1,3 +1,4 @@
+import React from "react";
 import { PropsWithChildren } from "react";
 import "./Button.scss";
 
@@ -8,14 +9,14 @@ export type ButtonProps = PropsWithChildren<{
 }>;
 
 const Button: React.FC<ButtonProps> = ({
-  onClick,
+  onClick = () => {},
   children,
   disabled = false,
-  className,
+  className = "",
 }) => (
   <button onClick={onClick} disabled={disabled} className={className}>
     {children}
   </button>
 );
 
-export default Button;
+export default React.memo(Button);

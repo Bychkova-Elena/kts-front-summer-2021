@@ -45,7 +45,7 @@ export type BranchItem = {
 };
 
 export type GetOrganizationRepoByIdParams = {
-  id: string;
+  name: string;
   organizationName: string;
 };
 
@@ -60,5 +60,5 @@ export interface IGitHubStore {
 
   getOrganizationRepoById(
     params: GetOrganizationRepoByIdParams
-  ): Promise<RepoItem[]>;
+  ): Promise<ApiResponse<RepoItem, any>>;
 }

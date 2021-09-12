@@ -38,15 +38,12 @@ function App() {
 
   const load = () => {
     const getRepos = async () => {
-      const EXAMPLE_ORGANIZATION = "kubernetes";
-      const PER_PAGE = 10;
-      const PAGE = 1;
       try {
         await new GitHubStore()
           .getOrganizationReposList({
-            organizationName: EXAMPLE_ORGANIZATION,
-            per_page: PER_PAGE,
-            page: PAGE,
+            organizationName: "kubernetes",
+            per_page: 10,
+            page: 1,
           })
           .then((repo) => setRepoList(repo.data))
           .finally(() => {
