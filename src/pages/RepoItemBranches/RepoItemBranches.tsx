@@ -5,8 +5,10 @@ import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
 import { RepoItem } from "@store/GitHubStore/types";
-import { Spin } from "antd";
-import { useParams } from "react-router-dom";
+import { Spin, Breadcrumb } from "antd";
+import { useParams, Link } from "react-router-dom";
+
+import styles from "./RepoItemBranches.module.scss";
 
 function RepoItemBranches() {
   const reposContext = useReposContext();
@@ -28,10 +30,33 @@ function RepoItemBranches() {
 
   return (
     <Spin spinning={reposContext.isLoading} tip="Loading...">
-      <div>
+      <div className={styles.repoItemPage}>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <Link to="/repos">Список репозиториев</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Репозиторий № {id}</Breadcrumb.Item>
+        </Breadcrumb>
         {repo.map((repo) => (
           <React.Fragment key={repo.id}>
-            {repo.name}
+            <h2>Репозиторий {repo.name}</h2>
+            <div className={styles.repoItemPage__content}>
+              <div>
+                <p>
+                  URL: <a href={repo.url}>{repo.name}</a>
+                </p>
+                <p>Приватность: {repo.private ? "Да" : "Нет"}</p>
+                <p>Количество звезд: {repo.stargazers_count}</p>
+                <Button onClick={showDrawer}>Показать ветки репозитория</Button>
+              </div>
+              <div>
+                <h3>Информация о владельце</h3>
+                <p>Имя владельца: {repo.owner.login}</p>
+                <p>
+                  URL: <a href={repo.owner.url}>{repo.owner.login}</a>
+                </p>
+              </div>
+            </div>
             <RepoBranchesDrawer
               selectedRepo={repo}
               visible={visible}
@@ -39,7 +64,6 @@ function RepoItemBranches() {
             />
           </React.Fragment>
         ))}
-        <Button onClick={showDrawer}>Показать ветки репозитория</Button>
       </div>
     </Spin>
   );

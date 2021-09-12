@@ -6,6 +6,7 @@ button{
   border-radius: 6px;
   padding:14px;
   box-sizing: border-box;
+  color:$background-color!important;
 
   &:hover:enabled{
   opacity: 0.7;
