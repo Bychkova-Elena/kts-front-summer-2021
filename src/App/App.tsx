@@ -14,7 +14,7 @@ import "./App.css";
 
 type ReposContextType = {
   repoList: RepoItem[];
-  setRepoList: (repoList: RepoItem[]) => void;
+  filteredData: (value: string) => void;
   isLoading: boolean;
   load: () => void;
   fetchData: () => void;
@@ -23,7 +23,7 @@ type ReposContextType = {
 const ReposContext = createContext<ReposContextType>({
   repoList: [],
   isLoading: true,
-  setRepoList: () => {},
+  filteredData: () => {},
   load: () => {},
   fetchData: () => {},
 });
@@ -54,6 +54,13 @@ function App() {
     getRepos();
   };
 
+  const filteredData = (value: string) => {
+    const filteredData = repoList.filter((repo) => {
+      return repo.name.toLowerCase().includes(value.toLowerCase());
+    });
+    setRepoList(filteredData);
+  };
+
   const fetchData = useCallback(() => {
     setTimeout(() => {
       setRepoList((prev) => [...prev, ...prev]);
@@ -61,7 +68,7 @@ function App() {
   }, []);
 
   return (
-    <Provider value={{ repoList, isLoading, load, setRepoList, fetchData }}>
+    <Provider value={{ repoList, isLoading, load, filteredData, fetchData }}>
       <div className="App">
         <Router>
           <Switch>

@@ -6,9 +6,8 @@ export type AvatarProps = {
   alt?: string;
 };
 
-const Avatar: React.FC<AvatarProps> = ({
-  src = "https://pbs.twimg.com/media/EXg7x-EWAAILbYK.jpg",
-  alt = "",
-}) => <img src={src} alt={alt} />;
+const Avatar: React.FC<AvatarProps> = ({ src = "#", alt = "" }) => (
+  <img src={src} alt={alt} />
+);
 
 export default React.memo(Avatar);

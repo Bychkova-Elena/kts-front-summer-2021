@@ -7,12 +7,10 @@ import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import { Spin, BackTop } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useHistory } from "react-router-dom";
 
 import styles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage: React.FC = () => {
-  let history = useHistory();
   const reposContext = useReposContext();
   const [value, setValue] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -27,10 +25,7 @@ const ReposSearchPage: React.FC = () => {
   };
 
   const handleSearch = () => {
-    const filteredData = reposContext.repoList.filter((repo) => {
-      return repo.name.toLowerCase().includes(value.toLowerCase());
-    });
-    reposContext.setRepoList(filteredData);
+    reposContext.filteredData(value);
     setDisabled(true);
   };
 
@@ -59,12 +54,7 @@ const ReposSearchPage: React.FC = () => {
           >
             {reposContext.repoList.map((repo) => (
               <React.Fragment key={repo.id}>
-                <RepoTile
-                  repo={repo}
-                  onClick={() => {
-                    history.push(`/repos/${repo.id}`);
-                  }}
-                />
+                <RepoTile repo={repo} />
               </React.Fragment>
             ))}
             {!reposContext.repoList.length && (
