@@ -3,7 +3,7 @@ import React from "react";
 import App from "@App/App";
 import ReactDOM from "react-dom";
 import "./index.css";
-import "./root/root.ts";
+import "@config/configureMobX";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -5,6 +5,8 @@
   "dependencies": {
     "antd": "^4.16.12",
     "cra-template-typescript": "^1.1.2",
+    "mobx": "^6.3.3",
+    "mobx-react-lite": "^3.2.1",
     "node-sass": "^4.12.0",
     "qs": "^6.10.1",
     "react": "^17.0.2",
