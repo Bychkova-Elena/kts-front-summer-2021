@@ -1,28 +1,30 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext } from "react";
 
 import RepoItemBranches from "@pages/RepoItemBranches";
 import ReposSearchPage from "@pages/ReposSearchPage";
 import GitHubStore from "@store/GitHubStore";
 import { RepoItem } from "@store/GitHubStore/types";
+import "./App.css";
+import { useLocalStore } from "@utils/useLocalStore";
+import { observer } from "mobx-react-lite";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
 } from "react-router-dom";
-import "./App.css";
 
 type ReposContextType = {
-  repoList: RepoItem[];
+  list: RepoItem[];
   filteredData: (value: string) => void;
-  isLoading: boolean;
+  loading: string;
   load: () => void;
   fetchData: () => void;
 };
 
 const ReposContext = createContext<ReposContextType>({
-  repoList: [],
-  isLoading: true,
+  list: [],
+  loading: "",
   filteredData: () => {},
   load: () => {},
   fetchData: () => {},
@@ -33,42 +35,32 @@ const Provider = ReposContext.Provider;
 export const useReposContext = () => useContext(ReposContext);
 
 function App() {
-  const [repoList, setRepoList] = useState<RepoItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const gitHubStore = useLocalStore(() => new GitHubStore());
+  let list = gitHubStore.list;
+  let loading = gitHubStore.meta;
 
-  const load = () => {
-    const getRepos = async () => {
-      try {
-        await new GitHubStore()
-          .getOrganizationReposList({
-            organizationName: "kubernetes",
-            per_page: 10,
-            page: 1,
-          })
-          .then((repo) => setRepoList(repo.data))
-          .finally(() => {
-            setIsLoading(false);
-          });
-      } catch (err) {}
-    };
-    getRepos();
+  const load = async () => {
+    await gitHubStore.getOrganizationReposList({
+      organizationName: "kubernetes",
+      per_page: 10,
+      page: 1,
+    });
   };
 
   const filteredData = (value: string) => {
-    const filteredData = repoList.filter((repo) => {
+    list = gitHubStore.list.filter((repo) => {
       return repo.name.toLowerCase().includes(value.toLowerCase());
     });
-    setRepoList(filteredData);
   };
 
   const fetchData = useCallback(() => {
     setTimeout(() => {
-      setRepoList((prev) => [...prev, ...prev]);
+      // list = (prev) => [...prev, ...prev];
     }, 2000);
   }, []);
 
   return (
-    <Provider value={{ repoList, isLoading, load, filteredData, fetchData }}>
+    <Provider value={{ list, loading, load, filteredData, fetchData }}>
       <div className="App">
         <Router>
           <Switch>
@@ -82,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);

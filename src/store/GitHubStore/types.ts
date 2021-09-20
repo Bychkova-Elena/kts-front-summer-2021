@@ -6,7 +6,7 @@
  * Выберите любой запрос из публичного API GitHub.
  */
 
-import { ApiResponse } from "src/shared/store/ApiStore/types";
+import { ApiResponse } from "@store/ApiStore/types";
 
 // Параметры запроса
 export type GetOrganizationReposListParams = {
@@ -52,7 +52,7 @@ export type GetOrganizationRepoByIdParams = {
 export interface IGitHubStore {
   getOrganizationReposList(
     params: GetOrganizationReposListParams
-  ): Promise<ApiResponse<RepoItem[], any>>;
+  ): Promise<void>;
 
   getRepoBranchesList(
     params: GetRepoBranchesLisParams

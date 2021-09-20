@@ -5,6 +5,7 @@ import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
 import { RepoItem } from "@store/GitHubStore/types";
+import { Meta } from "@utils/meta";
 import { Spin, Breadcrumb } from "antd";
 import { useParams, Link } from "react-router-dom";
 
@@ -14,7 +15,7 @@ const RepoItemBranches: React.FC = () => {
   const reposContext = useReposContext();
   const [visible, setVisible] = useState(false);
   const { id } = useParams<{ id: string }>();
-  const repo = reposContext.repoList.filter((repo: RepoItem) => repo.id == id);
+  const repo = reposContext.list.filter((repo: RepoItem) => repo.id == id);
 
   useEffect(() => {
     reposContext.load();
@@ -29,7 +30,7 @@ const RepoItemBranches: React.FC = () => {
   };
 
   return (
-    <Spin spinning={reposContext.isLoading} tip="Loading...">
+    <Spin spinning={reposContext.loading === Meta.loading} tip="Loading...">
       <div className={styles.repoItemPage}>
         <Breadcrumb>
           <Breadcrumb.Item>

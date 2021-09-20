@@ -5,6 +5,7 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
+import { Meta } from "@utils/meta";
 import { Spin, BackTop } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -17,7 +18,7 @@ const ReposSearchPage: React.FC = () => {
 
   useEffect(() => {
     reposContext.load();
-  }, [value]);
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -30,7 +31,7 @@ const ReposSearchPage: React.FC = () => {
   };
 
   return (
-    <Spin spinning={reposContext.isLoading} tip="Loading...">
+    <Spin spinning={reposContext.loading === Meta.loading} tip="Loading...">
       <div className={styles.repositoriesPage}>
         <BackTop>
           <Button className={styles.repositoriesPage__backTop}>
@@ -50,16 +51,14 @@ const ReposSearchPage: React.FC = () => {
             next={reposContext.fetchData}
             hasMore={true}
             loader={<h4>Loading...</h4>}
-            dataLength={reposContext.repoList.length}
+            dataLength={reposContext.list.length}
           >
-            {reposContext.repoList.map((repo) => (
+            {reposContext.list.map((repo) => (
               <React.Fragment key={repo.id}>
                 <RepoTile repo={repo} />
               </React.Fragment>
             ))}
-            {!reposContext.repoList.length && (
-              <span>Репозиториев не найдено</span>
-            )}
+            {!reposContext.list.length && <span>Репозиториев не найдено</span>}
           </InfiniteScroll>
         </div>
       </div>
