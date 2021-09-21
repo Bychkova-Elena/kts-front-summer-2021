@@ -4,7 +4,6 @@ import GitHubStore from "@store/GitHubStore";
 import { RepoItemModel } from "@store/models/gitHub";
 import { useLocalStore } from "@utils/useLocalStore";
 import { Drawer } from "antd";
-import { observer } from "mobx-react-lite";
 declare type EventType =
   | React.KeyboardEvent<HTMLDivElement>
   | React.MouseEvent<HTMLDivElement | HTMLButtonElement>;
@@ -46,4 +45,4 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   );
 };
 
-export default observer(React.memo(RepoBranchesDrawer));
+export default React.memo(RepoBranchesDrawer);

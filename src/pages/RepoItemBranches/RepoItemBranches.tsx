@@ -15,7 +15,7 @@ const RepoItemBranches: React.FC = () => {
   const reposContext = useReposContext();
   const [visible, setVisible] = useState(false);
   const { id } = useParams<{ id: string }>();
-  const repo = reposContext.list.filter((repo: RepoItemModel) => repo.id === id);
+  const repo = reposContext.list.filter((repo: RepoItemModel) => repo.id == id);
 
   useEffect(() => {
     reposContext.load();

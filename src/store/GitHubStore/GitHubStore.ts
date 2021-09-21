@@ -8,6 +8,12 @@ import {
   RepoItemApi,
   RepoItemModel,
 } from "@store/models/gitHub";
+import {
+  CollectionModel,
+  getInitialCollectionModel,
+  linearizeCollection,
+  normalizeCollection,
+} from "@store/models/shared/collection";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -32,7 +38,8 @@ type PrivateFields = "_list" | "_meta" | "_branches";
 export default class GitHubStore implements IGitHubStore, ILocalStore {
   private readonly _apiStore = new ApiStore(BASE_URL);
 
-  private _list: RepoItemModel[] = [];
+  private _list: CollectionModel<string, RepoItemModel> =
+    getInitialCollectionModel();
   private _branches: BranchItemModel[] = [];
   private _meta: Meta = Meta.initial;
 
@@ -50,7 +57,7 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
   }
 
   get list(): RepoItemModel[] {
-    return this._list;
+    return linearizeCollection(this._list);
   }
 
   get meta(): Meta {
@@ -66,7 +73,7 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
     params: GetOrganizationReposListParams
   ): Promise<void> {
     this._meta = Meta.loading;
-    this._list = [];
+    this._list = getInitialCollectionModel();
 
     const response = await this._apiStore.request<RepoItemApi[]>({
       method: HTTPMethod.GET,
@@ -80,12 +87,16 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
         this._meta = Meta.error;
       }
       try {
+        const list: RepoItemModel[] = [];
+        for (const item of response.data) {
+          list.push(normalizeRepoItem(item));
+        }
         this._meta = Meta.success;
-        this._list = response.data.map(normalizeRepoItem);
+        this._list = normalizeCollection(list, (listItem) => listItem.id);
         return;
       } catch (e) {
         this._meta = Meta.error;
-        this._list = [];
+        this._list = getInitialCollectionModel();
       }
     });
   }
@@ -128,7 +139,5 @@ export default class GitHubStore implements IGitHubStore, ILocalStore {
     });
   }
 
-  destroy(): void {
-    throw new Error("Method not implemented.");
-  }
+  destroy(): void {}
 }
