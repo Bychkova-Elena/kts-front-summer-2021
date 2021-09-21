@@ -4,7 +4,7 @@ import React from "react";
 import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
-import { RepoItem } from "@store/GitHubStore/types";
+import { RepoItemModel } from "@store/models/gitHub";
 import { Meta } from "@utils/meta";
 import { Spin, Breadcrumb } from "antd";
 import { useParams, Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const RepoItemBranches: React.FC = () => {
   const reposContext = useReposContext();
   const [visible, setVisible] = useState(false);
   const { id } = useParams<{ id: string }>();
-  const repo = reposContext.list.filter((repo: RepoItem) => repo.id == id);
+  const repo = reposContext.list.filter((repo: RepoItemModel) => repo.id === id);
 
   useEffect(() => {
     reposContext.load();
@@ -47,7 +47,7 @@ const RepoItemBranches: React.FC = () => {
                   URL: <a href={repo.url}>{repo.name}</a>
                 </p>
                 <p>Приватность: {repo.private ? "Да" : "Нет"}</p>
-                <p>Количество звезд: {repo.stargazers_count}</p>
+                <p>Количество звезд: {repo.stargazersCount}</p>
                 <Button onClick={showDrawer}>Показать ветки репозитория</Button>
               </div>
               <div>

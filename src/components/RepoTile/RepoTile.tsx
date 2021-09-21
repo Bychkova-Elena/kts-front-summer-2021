@@ -2,7 +2,7 @@ import React from "react";
 
 import Avatar from "@components/Avatar";
 import StartIcon from "@components/StarIcon";
-import { RepoItem } from "@store/GitHubStore/types";
+import { RepoItemModel } from "@store/models/gitHub";
 import { Tooltip } from "antd";
 import Moment from "moment";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import styles from "./RepoTile.module.scss";
 
 export type RepoTileProps = {
-  repo: RepoItem;
+  repo: RepoItemModel;
 };
 
 const RepoTile: React.FC<RepoTileProps> = ({ repo }) => (
@@ -18,7 +18,7 @@ const RepoTile: React.FC<RepoTileProps> = ({ repo }) => (
     <Link to={`/repos/${repo.id}`}>
       <div className={styles.gitRepoTile}>
         <div className={styles.gitRepoTile__avatar}>
-          <Avatar src={repo.owner.avatar_url}></Avatar>
+          <Avatar src={repo.owner.avatarUrl}></Avatar>
         </div>
         <div className={styles.gitRepoTile__content}>
           <div className={styles.gitRepoTile__repoName}>
@@ -30,9 +30,9 @@ const RepoTile: React.FC<RepoTileProps> = ({ repo }) => (
           <div className={styles.gitRepoTile__info}>
             <div className={styles.gitRepoTile__stars}>
               <StartIcon></StartIcon>
-              <small>{repo.stargazers_count}</small>
+              <small>{repo.stargazersCount}</small>
             </div>
-            <small>Updated {Moment(repo.updated_at).format("D MMM")}</small>
+            <small>Updated {Moment(repo.updatedAt).format("D MMM")}</small>
           </div>
         </div>
       </div>

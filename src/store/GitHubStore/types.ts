@@ -6,8 +6,6 @@
  * Выберите любой запрос из публичного API GitHub.
  */
 
-import { ApiResponse } from "@store/ApiStore/types";
-
 // Параметры запроса
 export type GetOrganizationReposListParams = {
   organizationName: string;
@@ -21,29 +19,6 @@ export type GetRepoBranchesLisParams = {
   repoName: string;
 };
 
-export type GitHubRepoOwner = {
-  id: string;
-  login: string;
-  avatar_url: string;
-  url: string;
-};
-
-export type RepoItem = {
-  id: string;
-  name: string;
-  url: string;
-  private: boolean;
-  stargazers_count: number;
-  owner: GitHubRepoOwner;
-  updated_at: Date;
-};
-
-export type BranchItem = {
-  name: string;
-  protected: boolean;
-  protection_url: string;
-};
-
 export type GetOrganizationRepoByIdParams = {
   name: string;
   organizationName: string;
@@ -54,11 +29,7 @@ export interface IGitHubStore {
     params: GetOrganizationReposListParams
   ): Promise<void>;
 
-  getRepoBranchesList(
-    params: GetRepoBranchesLisParams
-  ): Promise<ApiResponse<BranchItem[], any>>;
+  getRepoBranchesList(params: GetRepoBranchesLisParams): Promise<void>;
 
-  getOrganizationRepoById(
-    params: GetOrganizationRepoByIdParams
-  ): Promise<ApiResponse<RepoItem, any>>;
+  getOrganizationRepoById(params: GetOrganizationRepoByIdParams): Promise<void>;
 }

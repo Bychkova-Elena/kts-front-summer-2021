@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import GitHubStore from "@store/GitHubStore";
-import { BranchItem, RepoItem } from "@store/GitHubStore/types";
+import { RepoItemModel } from "@store/models/gitHub";
+import { useLocalStore } from "@utils/useLocalStore";
 import { Drawer } from "antd";
+import { observer } from "mobx-react-lite";
 declare type EventType =
   | React.KeyboardEvent<HTMLDivElement>
   | React.MouseEvent<HTMLDivElement | HTMLButtonElement>;
 
 export type RepoBranchesDrawerProps = {
-  selectedRepo: RepoItem;
+  selectedRepo: RepoItemModel;
   onClose: (e: EventType) => void;
   visible: boolean;
 };
@@ -18,21 +20,14 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   onClose,
   visible,
 }) => {
-  const [branchesList, setBranchesList] = useState<BranchItem[]>([]);
+  const gitHubStore = useLocalStore(() => new GitHubStore());
 
   useEffect(() => {
-    const getBranches = async () => {
-      try {
-        await new GitHubStore()
-          .getRepoBranchesList({
-            ownerName: selectedRepo.owner.login,
-            repoName: selectedRepo.name,
-          })
-          .then((branch) => setBranchesList(branch.data));
-      } catch (err) {}
-    };
-    getBranches();
-  }, [selectedRepo]);
+    gitHubStore.getRepoBranchesList({
+      ownerName: selectedRepo.owner.login,
+      repoName: selectedRepo.name,
+    });
+  }, [gitHubStore, selectedRepo]);
 
   return (
     <Drawer
@@ -41,8 +36,8 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
       onClose={onClose}
       visible={visible}
     >
-      {branchesList.length &&
-        branchesList.map((branch, i) => (
+      {gitHubStore.branches.length &&
+        gitHubStore.branches.map((branch, i) => (
           <p key={i}>
             {i + 1}. {branch.name}
           </p>
@@ -51,4 +46,4 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   );
 };
 
-export default React.memo(RepoBranchesDrawer);
+export default observer(React.memo(RepoBranchesDrawer));

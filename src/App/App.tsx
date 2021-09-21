@@ -3,8 +3,8 @@ import { createContext, useCallback, useContext } from "react";
 import RepoItemBranches from "@pages/RepoItemBranches";
 import ReposSearchPage from "@pages/ReposSearchPage";
 import GitHubStore from "@store/GitHubStore";
-import { RepoItem } from "@store/GitHubStore/types";
 import "./App.css";
+import { RepoItemModel } from "@store/models/gitHub";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import {
@@ -15,7 +15,7 @@ import {
 } from "react-router-dom";
 
 type ReposContextType = {
-  list: RepoItem[];
+  list: RepoItemModel[];
   filteredData: (value: string) => void;
   loading: string;
   load: () => void;
