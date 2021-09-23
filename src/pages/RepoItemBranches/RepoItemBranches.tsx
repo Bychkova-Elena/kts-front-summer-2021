@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import React from "react";
 
 import { useReposContext } from "@App/App";
 import Button from "@components/Button";
+import Error from "@components/Error";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
 import { RepoItemModel } from "@store/models/gitHub";
 import { Meta } from "@utils/meta";
@@ -21,52 +22,64 @@ const RepoItemBranches: React.FC = () => {
     reposContext.load();
   }, [id]);
 
-  const showDrawer = () => {
+  const showDrawer = useCallback(() => {
     setVisible(true);
-  };
+  }, []);
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setVisible(false);
-  };
+  }, []);
 
   return (
-    <Spin spinning={reposContext.loading === Meta.loading} tip="Loading...">
-      <div className={styles.repoItemPage}>
-        <Breadcrumb>
-          <Breadcrumb.Item>
-            <Link to="/repos">Список репозиториев</Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Репозиторий № {id}</Breadcrumb.Item>
-        </Breadcrumb>
-        {repo.map((repo) => (
-          <React.Fragment key={repo.id}>
-            <h2>Репозиторий {repo.name}</h2>
-            <div className={styles.repoItemPage__content}>
-              <div>
-                <p>
-                  URL: <a href={repo.url}>{repo.name}</a>
-                </p>
-                <p>Приватность: {repo.private ? "Да" : "Нет"}</p>
-                <p>Количество звезд: {repo.stargazersCount}</p>
-                <Button onClick={showDrawer}>Показать ветки репозитория</Button>
-              </div>
-              <div>
-                <h3>Информация о владельце</h3>
-                <p>Имя владельца: {repo.owner.login}</p>
-                <p>
-                  URL: <a href={repo.owner.url}>{repo.owner.login}</a>
-                </p>
-              </div>
-            </div>
-            <RepoBranchesDrawer
-              selectedRepo={repo}
-              visible={visible}
-              onClose={onClose}
-            />
-          </React.Fragment>
-        ))}
-      </div>
-    </Spin>
+    <div>
+      {reposContext.loading !== Meta.error && (
+        <Spin spinning={reposContext.loading === Meta.loading} tip="Loading...">
+          <div className={styles.repoItemPage}>
+            <Breadcrumb>
+              <Breadcrumb.Item>
+                <Link to="/repos">Список репозиториев</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>Репозиторий № {id}</Breadcrumb.Item>
+            </Breadcrumb>
+            {repo.map((repo) => (
+              <React.Fragment key={repo.id}>
+                <h2>Репозиторий {repo.name}</h2>
+                <div className={styles.repoItemPage__content}>
+                  <div>
+                    <p>
+                      URL: <a href={repo.url}>{repo.name}</a>
+                    </p>
+                    <p>Приватность: {repo.private ? "Да" : "Нет"}</p>
+                    <p>Количество звезд: {repo.stargazersCount}</p>
+                    <Button onClick={showDrawer}>
+                      Показать ветки репозитория
+                    </Button>
+                  </div>
+                  <div>
+                    <h3>Информация о владельце</h3>
+                    <p>Имя владельца: {repo.owner.login}</p>
+                    <p>
+                      URL: <a href={repo.owner.url}>{repo.owner.login}</a>
+                    </p>
+                  </div>
+                </div>
+                <RepoBranchesDrawer
+                  selectedRepo={repo}
+                  visible={visible}
+                  onClose={onClose}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+        </Spin>
+      )}
+      {reposContext.loading === Meta.error && (
+        <Error
+          title="Что-то пошло не так."
+          subTitle="Пожалуйста, перезагрузите страницу"
+        />
+      )}
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import GitHubStore from "@store/GitHubStore";
 import { RepoItemModel } from "@store/models/gitHub";
+import RepoBranchesStore from "@store/RepoBranchesStore";
 import { useLocalStore } from "@utils/useLocalStore";
 import { Drawer } from "antd";
 declare type EventType =
@@ -19,14 +19,14 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   onClose,
   visible,
 }) => {
-  const gitHubStore = useLocalStore(() => new GitHubStore());
+  const repoBranchesStore = useLocalStore(() => new RepoBranchesStore());
 
   useEffect(() => {
-    gitHubStore.getRepoBranchesList({
+    repoBranchesStore.getRepoBranchesList({
       ownerName: selectedRepo.owner.login,
       repoName: selectedRepo.name,
     });
-  }, [gitHubStore, selectedRepo]);
+  }, [repoBranchesStore, selectedRepo]);
 
   return (
     <Drawer
@@ -35,8 +35,8 @@ const RepoBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
       onClose={onClose}
       visible={visible}
     >
-      {gitHubStore.branches.length &&
-        gitHubStore.branches.map((branch, i) => (
+      {repoBranchesStore.branches.length &&
+        repoBranchesStore.branches.map((branch, i) => (
           <p key={i}>
             {i + 1}. {branch.name}
           </p>
