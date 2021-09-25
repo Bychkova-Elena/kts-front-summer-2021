@@ -1,10 +1,10 @@
-import ApiStore from "@store/ApiStore";
-import { HTTPMethod } from "@store/ApiStore/types";
 import {
   BranchItemApi,
   BranchItemModel,
   normalizeBranchItem,
 } from "@store/models/gitHub";
+import rootStore from "@store/RootStore";
+import { HTTPMethod } from "@store/RootStore/ApiStore/types";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -17,14 +17,12 @@ import {
 
 import { GetRepoBranchesLisParams, IRepoBranchesStore } from "./types";
 
-const BASE_URL: string = "https://api.github.com";
-
 type PrivateFields = "_meta" | "_branches";
 
 export default class RepoBranchesStore
   implements IRepoBranchesStore, ILocalStore
 {
-  private readonly _apiStore = new ApiStore(BASE_URL);
+  private _api = rootStore._apiStore;
   private _branches: BranchItemModel[] = [];
   private _meta: Meta = Meta.initial;
 
@@ -51,7 +49,7 @@ export default class RepoBranchesStore
     this._meta = Meta.loading;
     this._branches = [];
 
-    const response = await this._apiStore.request<BranchItemApi[]>({
+    const response = await this._api.request<BranchItemApi[]>({
       method: HTTPMethod.GET,
       endpoint: `/repos/${params.ownerName}/${params.repoName}/branches`,
       headers: {},

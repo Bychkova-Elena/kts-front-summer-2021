@@ -1,10 +1,10 @@
-import ApiStore from "@store/ApiStore";
-import { HTTPMethod } from "@store/ApiStore/types";
 import {
   normalizeRepoItem,
   RepoItemApi,
   RepoItemModel,
 } from "@store/models/gitHub";
+import rootStore from "@store/RootStore";
+import { HTTPMethod } from "@store/RootStore/ApiStore/types";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -17,12 +17,10 @@ import {
 
 import { GetOrganizationRepoByIdParams } from "./types";
 
-const BASE_URL: string = "https://api.github.com";
-
 type PrivateFields = "_repo" | "_meta";
 
 export default class RepoItemStore implements RepoItemStore, ILocalStore {
-  private readonly _apiStore = new ApiStore(BASE_URL);
+  private _api = rootStore._apiStore;
   private _repo: RepoItemModel = {
     id: "",
     name: "",
@@ -76,7 +74,7 @@ export default class RepoItemStore implements RepoItemStore, ILocalStore {
       updatedAt: new Date(),
     };
 
-    const response = await this._apiStore.request<RepoItemApi>({
+    const response = await this._api.request<RepoItemApi>({
       method: HTTPMethod.GET,
       endpoint: `/repos/${params.organizationName}/${params.name}`,
       headers: {},
