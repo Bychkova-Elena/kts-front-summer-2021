@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import RepoItemBranches from "@pages/RepoItemBranches";
 import ReposSearchPage from "@pages/ReposSearchPage";
@@ -18,12 +18,14 @@ type ReposContextType = {
   list: RepoItemModel[];
   loading: string;
   load: () => void;
+  fetchData: () => void;
 };
 
 const ReposContext = createContext<ReposContextType>({
   list: [],
   loading: "",
   load: () => {},
+  fetchData: () => {},
 });
 
 const Provider = ReposContext.Provider;
@@ -32,19 +34,25 @@ export const useReposContext = () => useContext(ReposContext);
 
 function App() {
   const reposListStore = useLocalStore(() => new ReposListStore());
+  let [page, setPage] = useState(1);
   let list = reposListStore.list;
   let loading = reposListStore.meta;
 
-  const load = async () => {
+  const load = useCallback(async () => {
     await reposListStore.getOrganizationReposList({
       organizationName: "kubernetes",
       per_page: 10,
-      page: 1,
+      page: page,
     });
+  }, [reposListStore, page]);
+
+  //TODO: FIX
+  const fetchData = () => {
+    setPage(page++);
   };
 
   return (
-    <Provider value={{ list, loading, load }}>
+    <Provider value={{ list, loading, load, fetchData }}>
       <div className="App">
         <Router>
           <Switch>

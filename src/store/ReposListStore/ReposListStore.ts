@@ -16,8 +16,10 @@ import { ILocalStore } from "@utils/useLocalStore";
 import {
   action,
   computed,
+  IReactionDisposer,
   makeObservable,
   observable,
+  reaction,
   runInAction,
 } from "mobx";
 
@@ -87,5 +89,16 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
     });
   }
 
-  destroy(): void {}
+  destroy(): void {
+    this._qpReaction();
+  }
+
+  private readonly _qpReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam("search"),
+    (search) => {
+      /* eslint-disable no-console */
+      console.log("search value change", search);
+      /* eslint-disable no-console */
+    }
+  );
 }

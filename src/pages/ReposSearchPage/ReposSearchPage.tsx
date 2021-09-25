@@ -30,13 +30,6 @@ const ReposSearchPage: React.FC = () => {
     []
   );
 
-  //TODO: for Infinitive scroll
-  const fetchData = useCallback(() => {
-    setTimeout(() => {
-      // reposContext.list(prev) => [...prev, ...prev];
-    }, 2000);
-  }, []);
-
   const handleSearch = useCallback(() => {
     reposContext.list = reposContext.list.filter((repo) => {
       return repo.name.toLowerCase().includes(value.toLowerCase());
@@ -64,7 +57,7 @@ const ReposSearchPage: React.FC = () => {
             </Button>
             <div className={styles.repositoriesPage__repoItem}>
               <InfiniteScroll
-                next={fetchData}
+                next={reposContext.fetchData}
                 hasMore={true}
                 loader={<h4>Loading...</h4>}
                 dataLength={reposContext.list.length}

@@ -3,7 +3,8 @@ import * as Router from "react-router-dom";
 import rootStore from "../instance";
 
 export const UseQueryParamsStoreInit = (): void => {
-  const { search } = Router.useLocation();
+  const location = Router.useLocation();
+  const history = Router.useHistory();
 
-  rootStore.query.setSearch(search);
+  rootStore.query.setHistory(history, location);
 };
