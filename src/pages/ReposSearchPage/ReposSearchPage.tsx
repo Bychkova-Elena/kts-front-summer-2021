@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import Error from "@components/Error";
 import Input from "@components/Input";
@@ -11,6 +10,7 @@ import { Spin, BackTop } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
+import { useReposContext } from "../../App/App";
 import styles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage: React.FC = () => {

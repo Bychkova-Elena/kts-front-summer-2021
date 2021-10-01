@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import React from "react";
 
-import { useReposContext } from "@App/App";
 import Button from "@components/Button";
 import Error from "@components/Error";
 import RepoBranchesDrawer from "@components/RepoBranchesDrawer";
@@ -10,6 +9,7 @@ import { Meta } from "@utils/meta";
 import { Spin, Breadcrumb } from "antd";
 import { useParams, Link } from "react-router-dom";
 
+import { useReposContext } from "../../App/App";
 import styles from "./RepoItemBranches.module.scss";
 
 const RepoItemBranches: React.FC = () => {

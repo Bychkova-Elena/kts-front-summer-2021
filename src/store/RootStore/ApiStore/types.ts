@@ -1,7 +1,7 @@
 // Перечисление методов HTTP-запроса
 export enum HTTPMethod {
   GET = "GET",
-  POST = "POST",
+  POST = "POST"
 }
 
 // Параметры запроса
@@ -391,7 +391,7 @@ export enum StatusHTTP {
    * Intended for use by intercepting proxies used to control access to the network (e.g., "captive portals" used
    * to require agreement to Terms of Service before granting full Internet access via a Wi-Fi hotspot).
    */
-  NETWORK_AUTHENTICATION_REQUIRED = 511,
+  NETWORK_AUTHENTICATION_REQUIRED = 511
 }
 
 // Ответ API
@@ -403,7 +403,7 @@ export type ApiResponse<SuccessT, ErrorT> =
     }
   | {
       success: false;
-      data: ErrorT;
+      data?: ErrorT;
       status?: StatusHTTP;
     };
 
