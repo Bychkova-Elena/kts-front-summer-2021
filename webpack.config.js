@@ -70,15 +70,15 @@ module.exports = {
         test: /\.([tj])sx?$/,
         use: "babel-loader",
       },
-      // {
-      //   test: /\.(png|svg|jpg|ico)$/,
-      //   type: "assets",
-      //   parser: {
-      //     dataUrlCondition: {
-      //       maxSize: 10 * 1024,
-      //     },
-      //   },
-      // },
+      {
+        test: /\.(png|svg|jpg|ico)$/,
+        type: "assets",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024,
+          },
+        },
+      },
     ],
   },
   resolve: {
