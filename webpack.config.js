@@ -40,13 +40,14 @@ const getSettingsForStyles = (withModules = false) => {
 module.exports = {
   entry: path.join(srcPath, "index.js"),
   target: !isProd ? "web" : "browserslist",
+  devtool: isProd ? "hidden-source-map" : "eval-source-map",
   output: {
     path: buildPath,
     filename: "bundle.js",
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: path.join(srcPath, "index.html"),
+      template: path.resolve(__dirname, "public/index.html"),
     }),
     !isProd && new ReactRefreshWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -69,15 +70,15 @@ module.exports = {
         test: /\.([tj])sx?$/,
         use: "babel-loader",
       },
-      {
-        test: /\.(png|svg|jpg|ico)$/,
-        type: "assets",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024,
-          },
-        },
-      },
+      // {
+      //   test: /\.(png|svg|jpg|ico)$/,
+      //   type: "assets",
+      //   parser: {
+      //     dataUrlCondition: {
+      //       maxSize: 10 * 1024,
+      //     },
+      //   },
+      // },
     ],
   },
   resolve: {
@@ -94,6 +95,6 @@ module.exports = {
   devServer: {
     host: "127.0.0.1",
     port: 9000,
-    hot: true,
+    hot: true
   },
 };

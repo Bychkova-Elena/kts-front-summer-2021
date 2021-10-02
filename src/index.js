@@ -2,6 +2,7 @@ import React from "react";
 
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import "regenerator-runtime";
 
 import App from "./App/App.tsx";
 import "./index.css";
