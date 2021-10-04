@@ -1,6 +1,6 @@
 @import "/src/variables";
 
-input{
+.Input{
   @include color($background-color, $border-color, $hint-color);
   box-sizing: border-box;
   border-radius: 6px;

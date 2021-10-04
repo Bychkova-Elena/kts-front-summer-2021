@@ -15,7 +15,7 @@ export type RepoTileProps = {
 const RepoTile: React.FC<RepoTileProps> = ({ repo }) => (
   <Tooltip title="Посмотреть ветки репозитория" color="#FF5555">
     <div className={styles.gitRepoTile}>
-      <div className={styles.gitRepoTile__avatar}>
+      <div>
         <Avatar src={repo.owner.avatarUrl}></Avatar>
       </div>
       <div className={styles.gitRepoTile__content}>

@@ -1,10 +1,8 @@
 import React from "react";
-
 import { createContext, useCallback, useContext, useState } from "react";
 
-import RepoItemBranches from "@pages/RepoItemBranches";
-import ReposSearchPage from "@pages/ReposSearchPage";
 import "./App.css";
+import routes from "@config/routes";
 import { RepoItemModel } from "@store/models/gitHub";
 import ReposListStore from "@store/ReposListStore";
 import { useLocalStore } from "@utils/useLocalStore";
@@ -36,9 +34,9 @@ export const useReposContext = () => useContext(ReposContext);
 
 function App() {
   const reposListStore = useLocalStore(() => new ReposListStore());
-  let [page, setPage] = useState(1);
-  let list = reposListStore.list;
-  let loading = reposListStore.meta;
+  const [page, setPage] = useState(1);
+  const list = reposListStore.list;
+  const loading = reposListStore.meta;
 
   const load = useCallback(async () => {
     await reposListStore.getOrganizationReposList({
@@ -49,18 +47,28 @@ function App() {
   }, [reposListStore, page]);
 
   //TODO: FIX
-  const fetchData = () => {
-    setPage(page++);
-  };
+  const fetchData = () => {};
+
+  const value = React.useMemo(
+    () => ({ list, loading, load, fetchData }),
+    [list, loading, load]
+  );
 
   return (
-    <Provider value={{ list, loading, load, fetchData }}>
+    <Provider value={value}>
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/repos" component={ReposSearchPage} />
-            <Route path="/repos/:id" component={RepoItemBranches} />
-            <Redirect to="/repos" />
+            <Route
+              exact
+              path={routes.reposList.path}
+              component={routes.reposList.component}
+            />
+            <Route
+              path={routes.repoItem.path}
+              component={routes.repoItem.component}
+            />
+            <Redirect to={routes.reposList.path} />
           </Switch>
         </Router>
       </div>

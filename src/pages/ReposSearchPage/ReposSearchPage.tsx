@@ -5,6 +5,7 @@ import Error from "@components/Error";
 import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
+import routes from "@config/routes";
 import { Meta } from "@utils/meta";
 import { Spin, BackTop } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -64,7 +65,7 @@ const ReposSearchPage: React.FC = () => {
               >
                 {reposContext.list.map((repo) => (
                   <React.Fragment key={repo.id}>
-                    <Link to={`/repos/${repo.id}`}>
+                    <Link to={routes.repoItem.create(repo.id)}>
                       <RepoTile repo={repo} />
                     </Link>
                   </React.Fragment>

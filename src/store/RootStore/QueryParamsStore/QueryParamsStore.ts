@@ -6,13 +6,13 @@ type PrivateFields = "_params";
 
 export default class QueryParamsStore {
   private _params: qs.ParsedQs = {};
-  private _history: History<unknown>[] = [];
-  private _location: Location<unknown>[] = [];
+  private _history!: History;
+  private _location!: Location;
 
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
-      setParam: action,
+      setParam: action
     });
   }
 
@@ -22,18 +22,10 @@ export default class QueryParamsStore {
     return this._params[key];
   }
 
-  setHistory(history: History<unknown>, location: Location<unknown>) {
-    this._history.push(history);
-    this._location.push(location);
+  setHistory(history: History, location: Location) {
+    this._history = history;
+    this._location = location;
   }
 
-  setParam(key: string, value: string) {
-    // const nextParams = { ...this._params, [key]: value };
-    // const nextSearch = qs.stringify(nextParams);
-    // this._history?.replace(
-    //   ...this._location,
-    //   search: nextSearch);
-  }
+  setParam(key: string, value: string) {}
 }
-
-function search(arg0: Location<unknown>, search: any, nextSearch: string) {}

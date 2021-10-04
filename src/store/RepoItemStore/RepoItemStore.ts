@@ -21,20 +21,7 @@ type PrivateFields = "_repo" | "_meta";
 
 export default class RepoItemStore implements RepoItemStore, ILocalStore {
   private _api = rootStore._apiStore;
-  private _repo: RepoItemModel = {
-    id: "",
-    name: "",
-    url: "",
-    private: false,
-    stargazersCount: 0,
-    owner: {
-      id: "",
-      login: "",
-      avatarUrl: "",
-      url: "",
-    },
-    updatedAt: new Date(),
-  };
+  private _repo: RepoItemModel | null = null;
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -47,7 +34,7 @@ export default class RepoItemStore implements RepoItemStore, ILocalStore {
     });
   }
 
-  get repo(): RepoItemModel {
+  get repo(): RepoItemModel | null {
     return this._repo;
   }
 
@@ -59,21 +46,7 @@ export default class RepoItemStore implements RepoItemStore, ILocalStore {
     params: GetOrganizationRepoByIdParams
   ): Promise<void> {
     this._meta = Meta.loading;
-    this._repo = {
-      id: "",
-      name: "",
-      url: "",
-      private: false,
-      stargazersCount: 0,
-      owner: {
-        id: "",
-        login: "",
-        avatarUrl: "",
-        url: "",
-      },
-      updatedAt: new Date(),
-    };
-
+    this._repo = null;
     const response = await this._api.request<RepoItemApi>({
       method: HTTPMethod.GET,
       endpoint: `/repos/${params.organizationName}/${params.name}`,
@@ -94,20 +67,7 @@ export default class RepoItemStore implements RepoItemStore, ILocalStore {
         return;
       } catch (e) {
         this._meta = Meta.error;
-        this._repo = {
-          id: "",
-          name: "",
-          url: "",
-          private: false,
-          stargazersCount: 0,
-          owner: {
-            id: "",
-            login: "",
-            avatarUrl: "",
-            url: "",
-          },
-          updatedAt: new Date(),
-        };
+        this._repo = null;
       }
     });
   }

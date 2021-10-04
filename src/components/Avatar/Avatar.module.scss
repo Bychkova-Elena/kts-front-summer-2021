@@ -1,6 +1,6 @@
 @import "/src/variables";
 
-img{
+.avatar{
   @include square(120px, 50%);
   margin-right: 12px;
 }
