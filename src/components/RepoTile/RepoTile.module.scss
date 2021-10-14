@@ -1,0 +1,45 @@
+@import "/src/variables";
+
+.gitRepoTile{
+  display: flex;
+  align-items: center;
+  @include color($background-color, $border-color);
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding:12px;
+  margin-bottom:16px;
+
+  &:hover{
+  cursor: pointer;
+  box-shadow: 0px 2px 6px $shadow-color;
+}
+  
+  &__content > div{
+  margin-bottom: 4px;
+}
+
+  &__content a, small{
+  font-size: 14px!important;
+  line-height: 16px;
+  color: $hint-color;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+  &__repoName b {
+  display: block;
+  width: 70vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+  &__orgLink a:hover{
+  color: $link-hover-color;
+}
+
+  &__stars{
+  display: inline;
+  margin-right: 20px;
+}
+}

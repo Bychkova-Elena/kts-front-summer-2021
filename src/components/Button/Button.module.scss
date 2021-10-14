@@ -1,0 +1,19 @@
+@import "/src/variables";
+
+.btn{
+  background: $accent-color;
+  border:0;
+  border-radius: 6px;
+  padding:14px;
+  box-sizing: border-box;
+  color:$background-color!important;
+
+  &:hover:enabled{
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+  &:disabled{
+  background: $border-color;
+}
+}

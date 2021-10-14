@@ -1,0 +1,20 @@
+@import "/src/variables";
+
+.Input{
+  @include color($background-color, $border-color, $hint-color);
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding:17px 12px;
+  line-height:16px;
+  font-size: 14px;
+
+  &:focus{
+  border: 1px solid $accent-color;
+  outline: none;
+  color: $default-color;
+}
+
+  &:disabled{
+  background: $input-disabled-color;
+}
+}
