@@ -10,6 +10,7 @@ import { useParams, Link } from "react-router-dom";
 import { useReposContext } from "../../App/App";
 import RepoCard from "./components/RepoCard";
 import styles from "./RepoItemBranches.module.scss";
+import routes from "@config/routes";
 
 const RepoItemBranches: React.FC = () => {
   const reposContext = useReposContext();
@@ -27,7 +28,7 @@ const RepoItemBranches: React.FC = () => {
           <div className={styles.repoItemPage}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link to="/repos">Список репозиториев</Link>
+                <Link to={routes.reposList.create()}>Список репозиториев</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>Репозиторий № {id}</Breadcrumb.Item>
             </Breadcrumb>
